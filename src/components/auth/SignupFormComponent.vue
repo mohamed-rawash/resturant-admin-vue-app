@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <form action="" @submit.prevent>
+  <div class="container" :class="{ 'danger-border': this.v$.$error }">
+    <form action="" @submit.prevent="signUp">
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto my-3 d-block">
           <svg
@@ -74,11 +74,14 @@
           <input
             type="text"
             name="userName"
-            id="user-name"
             class="form-control"
+            :class="{ error: v$.userName.$error }"
             placeholder="Enter Your Name"
             v-model.lazy="userName"
           />
+          <span class="error-feedback" v-if="v$.userName.$error">{{
+            v$.userName.$errors[0].$message
+          }}</span>
         </div>
       </div>
       <div class="row g-3 align-items-center">
@@ -86,11 +89,14 @@
           <input
             type="text"
             name="userName"
-            id="user-name"
             class="form-control"
+            :class="{ error: v$.email.$error }"
             placeholder="Enter Your Email"
             v-model.lazy="email"
           />
+          <span class="error-feedback" v-if="v$.email.$error">{{
+            v$.email.$errors[0].$message
+          }}</span>
         </div>
       </div>
       <div class="row g-3 align-items-center">
@@ -98,11 +104,14 @@
           <input
             type="text"
             name="phone"
-            id="phone"
             class="form-control"
+            :class="{ error: v$.phone.$error }"
             placeholder="Enter Your Phone"
             v-model.lazy="phone"
           />
+          <span class="error-feedback" v-if="v$.phone.$error">{{
+            v$.phone.$errors[0].$message
+          }}</span>
         </div>
       </div>
       <div class="row g-3 align-items-center">
@@ -110,18 +119,27 @@
           <input
             type="password"
             name="password"
-            id="password"
             class="form-control"
+            :class="{ error: v$.password.$error }"
             placeholder="Enter Your Password"
             v-model.lazy="password"
           />
+          <span class="error-feedback" v-if="v$.password.$error">{{
+            v$.password.$errors[0].$message
+          }}</span>
         </div>
       </div>
       <div class="row g-3 align-items-center">
-        <div class="col-auto mx-auto mt-5 d-block">
+        <div class="col-auto mx-auto mt-3 d-block">
           <button type="submit" class="btn btn-outline-primary">
             Signup Now
           </button>
+        </div>
+      </div>
+      <div class="row g-3 align-items-center">
+        <div class="col-auto mx-auto mt-3 d-block">
+          <span>Are you have an account </span>
+          <span @click="changeSignUpStatus" class="signin-btn">Signin</span>
         </div>
       </div>
     </form>
@@ -129,24 +147,106 @@
 </template>
 
 <script>
+import useVuelidate from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { mapMutations } from "vuex";
 export default {
   name: "SignupForm",
   data: () => ({
+    v$: useVuelidate(),
     userName: "",
     email: "",
     password: "",
     phone: "",
   }),
+  validations: {
+    userName: { required },
+    email: { required, email },
+    password: { required, minLength: minLength(10) },
+    phone: { required },
+  },
+  methods: {
+    ...mapMutations(["changeSignUpStatus"]),
+    signUp() {
+      console.log("Sign up");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Success");
+      } else {
+        console.log("Faild");
+      }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .container {
   width: 350px;
-  padding: 30px 0;
+  padding: 15px 0;
   margin: 50px auto;
   border-radius: 16px;
   background-color: #e2e2e2;
   border: 2px solid #afeeee;
+  .error-feedback {
+    display: inline-block;
+    width: 200px;
+    margin-top: 2px;
+    color: red;
+    font-size: 12px;
+    text-align: start;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .error {
+    border-color: red;
+    animation-name: bounce;
+    animation-duration: 0.5s;
+    animation-delay: 0.25s;
+  }
+  .signin-btn {
+    text-transform: none;
+    color: blue;
+    cursor: pointer;
+  }
+}
+.danger-border {
+  border: 2px solid red;
+}
+/* This approximates the ease-in-out-bounce animation from easings.net, which would require a plug-in to use*/
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
 }
 </style>
