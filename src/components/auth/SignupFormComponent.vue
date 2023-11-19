@@ -1,5 +1,8 @@
 <template>
-  <div class="container" :class="{ 'danger-border': this.v$.$error }">
+  <div
+    class="container"
+    :class="{ 'danger-border': this.v$.$error || this.emailFounded }"
+  >
     <form action="" @submit.prevent="signUp">
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto my-3 d-block">
@@ -87,8 +90,8 @@
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto my-3 d-block">
           <input
-            type="text"
-            name="userName"
+            type="email"
+            name="email"
             class="form-control"
             :class="{ error: v$.email.$error }"
             placeholder="Enter Your Email"
@@ -135,6 +138,11 @@
             Signup Now
           </button>
         </div>
+        <div v-if="this.emailFounded">
+          <span class="error-feedback" style="text-align: center"
+            >{{ this.email }} this email not aviliable</span
+          >
+        </div>
       </div>
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto mt-3 d-block">
@@ -147,6 +155,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { mapMutations } from "vuex";
@@ -158,6 +167,7 @@ export default {
     email: "",
     password: "",
     phone: "",
+    emailFounded: false,
   }),
   validations: {
     userName: { required },
@@ -167,13 +177,28 @@ export default {
   },
   methods: {
     ...mapMutations(["changeSignUpStatus"]),
-    signUp() {
+    async signUp() {
       console.log("Sign up");
       this.v$.$validate();
-      if (!this.v$.$error) {
-        console.log("Success");
-      } else {
-        console.log("Faild");
+      let result = await axios.get(
+        `http://localhost:3000/users?email=${this.email}`
+      );
+      if (result.status === 200 && result.data.length === 0) {
+        this.emailFounded = false;
+        if (!this.v$.$error) {
+          let result = await axios.post("http://localhost:3000/users", {
+            userName: this.userName,
+            email: this.email,
+            password: this.password,
+            phone: this.phone,
+          });
+          if (result.status == 201) {
+            localStorage.setItem("user-info", JSON.stringify(result.data));
+            this.$router.push({ name: "home-view" });
+          }
+        }
+      } else if (!this.v$.$error) {
+        this.emailFounded = true;
       }
     },
   },
@@ -190,7 +215,7 @@ export default {
   border: 2px solid #afeeee;
   .error-feedback {
     display: inline-block;
-    width: 200px;
+    width: 100%;
     margin-top: 2px;
     color: red;
     font-size: 12px;

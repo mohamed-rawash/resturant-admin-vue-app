@@ -1,6 +1,9 @@
 <template>
-  <div class="container" :class="{ 'danger-border': this.v$.$error }">
-    <form action="" @submit.prevent="signUp">
+  <div
+    class="container"
+    :class="{ 'danger-border': this.v$.$error || this.userNotFound }"
+  >
+    <form action="" @submit.prevent="signIn">
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto my-3 d-block">
           <svg
@@ -110,6 +113,11 @@
             Signin Now
           </button>
         </div>
+        <div v-if="this.userNotFound">
+          <span class="error-feedback"
+            >Not Found: please check your email and password!</span
+          >
+        </div>
       </div>
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto mt-5 d-block">
@@ -122,6 +130,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { ref, computed } from "vue";
@@ -140,16 +149,28 @@ export default {
     const v$ = useVuelidate(rules, state);
     return { state, rules, v$ };
   },
-  data: () => ({}),
+  data: () => ({
+    userNotFound: false,
+  }),
   methods: {
     ...mapMutations(["changeSignUpStatus"]),
-    signUp() {
-      console.log("Sign up");
+    async signIn() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        console.log("Success");
-      } else {
-        console.log("Faild");
+        let result = await axios.get(
+          `http://localhost:3000/users?email=${this.state.email}&password=${this.state.password}`
+        );
+        if (result.status === 200 && result.data.length > 0) {
+          console.log("*****************");
+          this.userNotFound = false;
+          localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+          this.$router.push({ name: "home-view" });
+          console.log("*****************");
+        } else {
+          console.log("*****************");
+          this.userNotFound = true;
+          console.log("*****************");
+        }
       }
     },
   },
