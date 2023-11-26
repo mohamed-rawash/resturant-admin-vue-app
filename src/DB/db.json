@@ -1,5 +1,11 @@
 {
   "users": [
-    
+    {
+      "userName": "Mohamed Morata",
+      "email": "rawashm35@gmail.com",
+      "phone": "01033939999",
+      "password": "123456789",
+      "id": 1
+    }
   ]
 }

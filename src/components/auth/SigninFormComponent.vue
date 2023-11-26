@@ -10,7 +10,7 @@
             viewBox="0 0 31.996 31.996"
             xmlns="http://www.w3.org/2000/svg"
             style="width: 60px"
-            fill="#555555"
+            fill="#000000"
           >
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
             <g
@@ -73,7 +73,7 @@
       </div>
 
       <div class="row g-3 align-items-center">
-        <h1 class="text-primary">Sign In</h1>
+        <h1 class="text-primary text-center">Sign In</h1>
 
         <div class="col-auto mx-auto my-3 d-block">
           <input
@@ -109,11 +109,9 @@
       </div>
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto mt-5 d-block">
-          <button type="submit" class="btn btn-outline-primary">
-            Signin Now
-          </button>
+          <button type="submit" class="btn btn-outline-info">Signin Now</button>
         </div>
-        <div v-if="this.userNotFound">
+        <div v-if="this.userNotFound" style="width: 100%">
           <span class="error-feedback"
             >Not Found: please check your email and password!</span
           >
@@ -144,7 +142,7 @@ export default {
     });
     const rules = computed(() => ({
       email: { required, email },
-      password: { required, minLength: minLength(10) },
+      password: { required, minLength: minLength(8) },
     }));
     const v$ = useVuelidate(rules, state);
     return { state, rules, v$ };
@@ -180,12 +178,16 @@ export default {
 <style scoped lang="scss">
 .container {
   width: 350px;
+  height: fit-content;
   padding: 15px 0;
   margin: 50px auto;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.33);
   border-radius: 16px;
-  background-color: #e2e2e2;
-  border: 2px solid #afeeee;
-
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.1px);
+  -webkit-backdrop-filter: blur(6.1px);
+  border: 1px solid #0dcaf0;
   input {
     width: 100%;
   }
@@ -195,7 +197,7 @@ export default {
     margin-top: 2px;
     color: red;
     font-size: 12px;
-    text-align: start;
+    text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -208,7 +210,7 @@ export default {
   }
   .signin-btn {
     text-transform: none;
-    color: blue;
+    color: white;
     cursor: pointer;
   }
 }

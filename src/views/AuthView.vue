@@ -29,4 +29,13 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.parent {
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  background-color: #0dcaf0;
+  background-image: url("@/assets/images/background.jpg");
+  background-size: cover;
+}
+</style>
