@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="row align-items-center">
-        <h1 class="text-primary">Sign up</h1>
+        <h1 class="text-primary text-center">Sign up</h1>
         <div class="col-auto mx-auto mb-3 d-block">
           <input
             type="text"
@@ -134,9 +134,7 @@
       </div>
       <div class="row g-3 align-items-center">
         <div class="col-auto mx-auto mt-3 d-block">
-          <button type="submit" class="btn btn-outline-primary">
-            Signup Now
-          </button>
+          <button type="submit" class="btn btn-outline-info">Signup Now</button>
         </div>
         <div v-if="this.emailFounded">
           <span class="error-feedback" style="text-align: center"
@@ -172,7 +170,7 @@ export default {
   validations: {
     userName: { required },
     email: { required, email },
-    password: { required, minLength: minLength(10) },
+    password: { required, minLength: minLength(8) },
     phone: { required },
   },
   methods: {
@@ -180,25 +178,27 @@ export default {
     async signUp() {
       console.log("Sign up");
       this.v$.$validate();
-      let result = await axios.get(
-        `http://localhost:3000/users?email=${this.email}`
-      );
-      if (result.status === 200 && result.data.length === 0) {
-        this.emailFounded = false;
-        if (!this.v$.$error) {
-          let result = await axios.post("http://localhost:3000/users", {
-            userName: this.userName,
-            email: this.email,
-            password: this.password,
-            phone: this.phone,
-          });
-          if (result.status == 201) {
-            localStorage.setItem("user-info", JSON.stringify(result.data));
-            this.$router.push({ name: "home-view" });
+      if (!this.v$.$error) {
+        let result = await axios.get(
+          `http://localhost:3000/users?email=${this.email}`
+        );
+        if (result.status === 200 && result.data.length === 0) {
+          this.emailFounded = false;
+          if (!this.v$.$error) {
+            let result = await axios.post("http://localhost:3000/users", {
+              userName: this.userName,
+              email: this.email,
+              password: this.password,
+              phone: this.phone,
+            });
+            if (result.status == 201) {
+              localStorage.setItem("user-info", JSON.stringify(result.data));
+              this.$router.push({ name: "home-view" });
+            }
           }
+        } else if (!this.v$.$error) {
+          this.emailFounded = true;
         }
-      } else if (!this.v$.$error) {
-        this.emailFounded = true;
       }
     },
   },
@@ -210,16 +210,20 @@ export default {
   width: 350px;
   padding: 15px 0;
   margin: 50px auto;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.33);
   border-radius: 16px;
-  background-color: #e2e2e2;
-  border: 2px solid #afeeee;
+  box-shadow: 0 4px 30px #0000001a;
+  backdrop-filter: blur(6.1px);
+  -webkit-backdrop-filter: blur(6.1px);
+  border: 1px solid #0dcaf0;
   .error-feedback {
     display: inline-block;
     width: 100%;
     margin-top: 2px;
     color: red;
     font-size: 12px;
-    text-align: start;
+    text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -232,7 +236,7 @@ export default {
   }
   .signin-btn {
     text-transform: none;
-    color: blue;
+    color: white;
     cursor: pointer;
   }
 }
