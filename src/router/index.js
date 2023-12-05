@@ -54,6 +54,14 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "error-view",
+    meta: {
+      title: "Error",
+    },
+    component: () => import("../views/ErrorPage.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -62,7 +70,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title;
+  document.title = `${process.env.VUE_APP_TITLE} | ${to.meta.title}`;
   next();
 });
 
