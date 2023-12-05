@@ -17,6 +17,10 @@
 - Added update profile ✅
   ![image](https://github.com/mohamed-rawash/resturant-admin-vue-app/assets/81307786/9c2156a8-96ad-4658-924a-79c385b3ea6c)
 
+- Added error page ✅
+  ![image](https://github.com/mohamed-rawash/resturant-admin-vue-app/assets/81307786/136ba8c7-2f22-4838-8f29-4afe101fea80)
+
+
 
 
 
