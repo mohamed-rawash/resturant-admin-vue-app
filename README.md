@@ -19,6 +19,9 @@
 
 - Added error page ✅
   ![image](https://github.com/mohamed-rawash/resturant-admin-vue-app/assets/81307786/136ba8c7-2f22-4838-8f29-4afe101fea80)
+  
+- Added add new restaurant component successfully ✅
+  ![image](https://github.com/mohamed-rawash/resturant-admin-vue-app/assets/81307786/cff14211-2716-47da-8cc4-836c426bca37)
 
 
 
