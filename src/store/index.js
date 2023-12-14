@@ -1,9 +1,11 @@
 import { createStore } from "vuex";
 import auth from "@/store/auth";
+import axios from "axios";
 
 export default createStore({
   state: {
     showEditProfile: false,
+    addrestaurantStatus: "",
     userInfo: {},
   },
   getters: {
@@ -23,6 +25,9 @@ export default createStore({
     changeEditstatus(state) {
       state.showEditProfile = !state.showEditProfile;
     },
+    changerestaurantStatus(state, value) {
+      state.addrestaurantStatus = value;
+    },
   },
   actions: {
     addUserDataToStorage(user) {
@@ -32,6 +37,14 @@ export default createStore({
       const user = JSON.parse(localStorage.getItem("user-info"));
       console.log(user);
       context.commit("getUserData", user);
+    },
+    async addNewRestaurant(context, restaurant) {
+      await axios
+        .post("http://localhost:3000/locations", restaurant)
+        .then((res) => context.commit("changerestaurantStatus", res.status))
+        .catch((error) =>
+          context.commit("changerestaurantStatus", error.status)
+        );
     },
   },
   modules: {

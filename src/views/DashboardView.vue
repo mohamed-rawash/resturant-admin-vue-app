@@ -1,17 +1,16 @@
 <template>
-  <main>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-    <h1 style="color: blueviolet">DashBoard</h1>
-  </main>
+  <div>
+    <AddNewLocation />
+  </div>
 </template>
+
+<script>
+import AddNewLocation from "../components/dashboard/AddNewLocation";
+export default {
+  components: {
+    AddNewLocation,
+  },
+};
+</script>
+
+<style lang="scss" scoped></style>

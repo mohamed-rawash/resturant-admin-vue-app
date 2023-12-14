@@ -14,5 +14,56 @@
       "password": "123456789",
       "id": 2
     }
+  ],
+  "locations": [
+    {
+      "name": "hhhhhhhhhh",
+      "phone": "sssssssssssssssa",
+      "address": "aaaaaassasm a as a assas asas",
+      "userId": 1,
+      "id": 1
+    },
+    {
+      "name": "Moha Restaurant",
+      "phone": "aaaaaaaaaaaaaaaaaaaaas",
+      "address": "ssssssssssssssssssssssssssss",
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "name": "ssssssssssssss",
+      "phone": "sssssssssssssssssssss",
+      "address": "ddddddddddddddddddddddddddddd",
+      "userId": 1,
+      "id": 3
+    },
+    {
+      "name": "zzzzzzzzzzzzzzzzzz",
+      "phone": "xxxxxxxxxxxxxxxxxxx",
+      "address": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "userId": 1,
+      "id": 4
+    },
+    {
+      "name": "Moha Restaurant",
+      "phone": "dddddddddddddddddddddddd",
+      "address": "ddddddddddddddddddddddd",
+      "userId": 1,
+      "id": 5
+    },
+    {
+      "name": "Moha Restaurant",
+      "phone": "jjjjjjjjjjkkkkkkkkkkkkkkk",
+      "address": "g ggggggggg ggggggggggg",
+      "userId": 1,
+      "id": 6
+    },
+    {
+      "name": "Moha Restaurant",
+      "phone": "jjjjjjjjjjkkkkkkkkkkkkkkk",
+      "address": "g ggggggggg ggggggggggg",
+      "userId": 1,
+      "id": 7
+    }
   ]
 }

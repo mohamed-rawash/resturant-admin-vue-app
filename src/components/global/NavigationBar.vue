@@ -128,7 +128,7 @@ export default {
     justify-content: center;
     gap: 10px;
     padding: 0;
-    @media (min-width: 768px) {
+    @media (min-width: 767px) {
       .burger-icon {
         display: none;
       }

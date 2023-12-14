@@ -31,19 +31,33 @@
       <div class="btns d-flex gap-3">
         <button
           @click="goToEditProfile"
+          @mouseover="() => (editHover = true)"
+          @mouseleave="() => (editHover = false)"
           class="btn btn-outline-primary d-flex gap-2 align-items-center"
         >
           <span class="icon">
-            <font-awesome-icon icon="fa-solid fa-user-pen" bounce />
+            <font-awesome-icon
+              v-if="editHover"
+              icon="fa-solid fa-user-pen"
+              bounce
+            />
+            <font-awesome-icon v-if="!editHover" icon="fa-solid fa-user-pen" />
           </span>
           <span class="text">Edit Profile</span>
         </button>
         <button
           @click="deleteAccount"
+          @mouseover="() => (deleteHover = true)"
+          @mouseleave="() => (deleteHover = false)"
           class="btn btn-outline-danger d-flex gap-2 align-items-center"
         >
           <span class="icon">
-            <font-awesome-icon :icon="['fas', 'trash']" shake />
+            <font-awesome-icon
+              v-if="deleteHover"
+              :icon="['fas', 'trash']"
+              shake
+            />
+            <font-awesome-icon v-if="!deleteHover" :icon="['fas', 'trash']" />
           </span>
           <span class="text">Delete Account</span>
         </button>
@@ -110,6 +124,8 @@ import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   data: () => ({
+    deleteHover: false,
+    editHover: false,
     showEditProfile: false,
   }),
   components: {},

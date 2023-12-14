@@ -2,7 +2,6 @@
   <div class="home">
     <navigation-bar />
     <div class="body">
-      <span class="badge" v-if="this.user">{{ this.user.userName }}</span>
       <router-view />
     </div>
   </div>
